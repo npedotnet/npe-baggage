@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="npe-image-library" default="all" basedir=".">
+
+	<property name="version" value="1.0"/>
+	<property name="src" value="../src"/>
+	<property name="dest" value="dest"/>
+	<property name="jarfile" value="npe-baggage-${version}.jar"/>
+	
+	<target name="all" depends="compile">
+		<jar jarfile="${jarfile}" basedir="${dest}"/>
+	</target>
+	
+	<target name="compile" depends="preprocess">
+		<javac srcdir="${dest}" destdir="${dest}" includeantruntime="false"/>
+	</target>
+	
+	<target name="preprocess">
+		<mkdir dir="${dest}"/>
+		<copy todir="${dest}">
+			<fileset dir="${src}"/>
+		</copy>
+	</target>
+	
+	<target name="clean">
+		<delete dir="${dest}"/>
+		<delete file="${jarfile}"/>
+	</target>
+
+</project>
