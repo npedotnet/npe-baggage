@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="npe-image-library" default="all" basedir=".">
+<project name="npe-baggage" default="all" basedir=".">
 
 	<property name="version" value="1.0"/>
 	<property name="src" value="../src"/>
 	<property name="dest" value="dest"/>
-	<property name="jarfile" value="npe-baggage-${version}.jar"/>
+	<property name="jarfile" value="${ant.project.name}-${version}.jar"/>
+	
+	<property name="npe.base.url" value="https://github.com/npedotnet/npedotnet.github.io/blob/master/archives/npe-base-1.0.jar?raw=true"/>
+	<property name="npe.base.jar" value="npe-base-1.0.jar"/>
 	
 	<target name="all" depends="compile">
 		<jar jarfile="${jarfile}" basedir="${dest}"/>
 	</target>
 	
 	<target name="compile" depends="preprocess">
-		<javac srcdir="${dest}" destdir="${dest}" includeantruntime="false"/>
+		<javac srcdir="${dest}" destdir="${dest}" classpath="${npe.base.jar}" includeantruntime="false"/>
 	</target>
 	
 	<target name="preprocess">
@@ -20,11 +23,13 @@
 		<copy todir="${dest}">
 			<fileset dir="${src}"/>
 		</copy>
+		<get src="${npe.base.url}" dest="."/>
 	</target>
 	
 	<target name="clean">
 		<delete dir="${dest}"/>
 		<delete file="${jarfile}"/>
+		<delete file="${npe.base.jar}"/>
 	</target>
 
 </project>
